@@ -20,7 +20,7 @@ var app = express();
 
 app.set('port', process.env.PORT || 3000);
 
-app.use(morgan(':remote-addr | :remote-user [:date[clf]] | :req[error] | :response-time ms', {
+app.use(morgan(':remote-addr | :date[web] | :req[error] | :response-time ms', {
 	stream: accessLogStream
 }));
 
