@@ -1,0 +1,33 @@
+{
+  "name": "http-logs-server",
+  "version": "1.0.0",
+  "description": "Simple server to store logs with a http call",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eduardogch/http-logs-server.git"
+  },
+  "keywords": [
+    "logs",
+    "angular",
+    "server"
+  ],
+  "author": "Eduardo Gonzalez <eduardo.gch@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eduardogch/http-logs-server/issues"
+  },
+  "homepage": "https://github.com/eduardogch/http-logs-server#readme",
+  "devDependencies": {
+    "express": "^4.14.0",
+    "file-stream-rotator": "0.0.7",
+    "fs-extra": "^0.30.0",
+    "morgan": "^1.7.0",
+    "node-uuid": "^1.4.7",
+    "path": "^0.12.7"
+  }
+}
