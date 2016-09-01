@@ -4,17 +4,18 @@ var fs = require('fs');
 var morgan = require('morgan');
 var path = require('path');
 var moment = require('moment');
-var logDirectory = path.join(__dirname, 'logs');
+var logDirectory = path.join(__dirname, 'conf/logs');
 
 if (!fs.existsSync(logDirectory)) {
-	fs.mkdirSync(logDirectory);
+    fs.mkdirSync(logDirectory);
+    fs.createWriteStream(logDirectory + "/access-" + moment().format("YYYYMMDD") + ".log");
 }
 
 var accessLogStream = FileStreamRotator.getStream({
-	date_format: 'YYYYMMDD',
-	filename: path.join(logDirectory, 'access-%DATE%.log'),
-	frequency: 'daily',
-	verbose: false
+    date_format: 'YYYYMMDD',
+    filename: path.join(logDirectory, 'access-%DATE%.log'),
+    frequency: 'daily',
+    verbose: false
 });
 
 var app = express();
@@ -22,19 +23,19 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 
 app.use(morgan(':remote-addr | :date[web] | :req[error] | :response-time ms', {
-	stream: accessLogStream
+    stream: accessLogStream
 }));
 
 app.get('/', function(req, res) {
-	res.send('Good!');
+    res.send('Good!');
 });
 
 app.all('*', function(req, res) {
-	res.redirect('/');
+    res.redirect('/');
 });
 
 app.listen(app.get('port'), function() {
-	console.log('Listening on port %d', app.get('port'));
+    console.log('Listening on port %d', app.get('port'));
 });
 
 module.exports = app;
@@ -43,9 +44,9 @@ function server() {
     var winston = require('winston');
     var LogIO = require('log.io');
     var logging = new winston.Logger({
-      transports: [ new winston.transports.Console({
-        level: 'error'
-      })]
+        transports: [new winston.transports.Console({
+            level: 'error'
+        })]
     });
 
     var conf = require('./conf/harvester.js').config;
@@ -66,5 +67,3 @@ function server() {
 }
 
 server();
-
-console.log(moment().format("YYYYMMDD"));
