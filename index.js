@@ -1,4 +1,5 @@
 var FileStreamRotator = require('file-stream-rotator');
+var cors = require('cors');
 var express = require('express');
 var fs = require('fs');
 var morgan = require('morgan');
@@ -20,7 +21,9 @@ var accessLogStream = FileStreamRotator.getStream({
 
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3030);
+
+app.use(cors());
 
 app.use(morgan(':remote-addr | :date[web] | :req[error] | :response-time ms', {
     stream: accessLogStream
@@ -35,7 +38,8 @@ app.all('*', function(req, res) {
 });
 
 app.listen(app.get('port'), function() {
-    console.log('Listening on port %d', app.get('port'));
+    console.log('HTTP logserver listen in port %d', app.get('port'));
+    console.log('WebServer listen in 28778');
 });
 
 module.exports = app;

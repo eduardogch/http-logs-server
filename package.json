@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/eduardogch/http-logs-server#readme",
   "dependencies": {
+    "cors": "^2.8.0",
     "express": "^4.14.0",
     "file-stream-rotator": "0.0.7",
     "log.io": "^0.3.4",
