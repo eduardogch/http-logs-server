@@ -40,7 +40,7 @@ module.exports = app;
 
 function server() {
     var winston = require('winston');
-    var server = require('./node_modules/log.io/index.js');
+    var LogIO = require('log.io');
     var logging = new winston.Logger({
       transports: [ new winston.transports.Console({
         level: 'error'
@@ -56,11 +56,11 @@ function server() {
     var logConf = require('./conf/log_server.conf').config;
     logConf.logging = logging;
 
-    var logServer = new server.LogServer(logConf);
-    var webServer = new server.WebServer(logServer, webConf);
+    var logServer = new LogIO.LogServer(logConf);
+    var webServer = new LogIO.WebServer(logServer, webConf);
     webServer.run();
 
-    var harvester = new server.LogHarvester(conf);
+    var harvester = new LogIO.LogHarvester(conf);
     harvester.run();
 }
 
