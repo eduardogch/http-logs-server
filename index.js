@@ -3,6 +3,7 @@ var express = require('express');
 var fs = require('fs');
 var morgan = require('morgan');
 var path = require('path');
+var moment = require('moment');
 var logDirectory = path.join(__dirname, 'logs');
 
 if (!fs.existsSync(logDirectory)) {
@@ -47,13 +48,13 @@ function server() {
       })]
     });
 
-    var conf = require('./conf/harvester.conf').config;
+    var conf = require('./conf/harvester.js').config;
     conf.logging = logging;
 
-    var webConf = require('./conf/web_server.conf').config;
+    var webConf = require('./conf/web_server.js').config;
     webConf.logging = logging;
 
-    var logConf = require('./conf/log_server.conf').config;
+    var logConf = require('./conf/log_server.js').config;
     logConf.logging = logging;
 
     var logServer = new LogIO.LogServer(logConf);
@@ -65,3 +66,5 @@ function server() {
 }
 
 server();
+
+console.log(moment().format("YYYYMMDD"));

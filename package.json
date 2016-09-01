@@ -26,6 +26,7 @@
     "express": "^4.14.0",
     "file-stream-rotator": "0.0.7",
     "log.io": "^0.3.4",
+    "moment": "^2.14.1",
     "morgan": "^1.7.0",
     "path": "^0.12.7",
     "winston": "^2.2.0"
