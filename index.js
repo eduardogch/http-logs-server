@@ -39,31 +39,29 @@ app.listen(app.get('port'), function() {
 module.exports = app;
 
 function server() {
-    winston = require('winston');
-    logging = new winston.Logger({
+    var winston = require('winston');
+    var server = require('./node_modules/log.io/index.js');
+    var logging = new winston.Logger({
       transports: [ new winston.transports.Console({
         level: 'error'
       })]
     });
 
-    conf = require('./conf/harvester.conf').config;
+    var conf = require('./conf/harvester.conf').config;
     conf.logging = logging;
 
-    var harvester = require('./node_modules/log.io/index.js');
-    harvester = new harvester.LogHarvester(conf);
-    harvester.run();
-
-    webConf = require('./conf/web_server.conf').config;
+    var webConf = require('./conf/web_server.conf').config;
     webConf.logging = logging;
 
-    logConf = require('./conf/log_server.conf').config;
+    var logConf = require('./conf/log_server.conf').config;
     logConf.logging = logging;
 
-    var server = require('./node_modules/log.io/index.js');
-
-    logServer = new server.LogServer(logConf);
-    webServer = new server.WebServer(logServer, webConf);
+    var logServer = new server.LogServer(logConf);
+    var webServer = new server.WebServer(logServer, webConf);
     webServer.run();
+
+    var harvester = new server.LogHarvester(conf);
+    harvester.run();
 }
 
 server();
